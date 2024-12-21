@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Udemy Downloader</title>
+  <meta charset="utf-8">
+
+  <script type="text/javascript" src="Plugins/jquery-3.5.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="Plugins/datatables.min.css" />
+  <script type="text/javascript" src="Plugins/datatables.min.js"></script>
+  <link rel="stylesheet" href="Plugins/Bootstrap-4-4.1.1/glyphicon.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <script src="background.js"></script>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 p-0 m-0 text-white">
+        <div id="left-side">
+          <div id="left-brand">
+            <img src="/logo.png" class="brand-logo" style="width:50%; margin-bottom:25px;">
+            <span>Udemy Downloader</span>
+            <p>DiYA Software</p>
+          </div>
+          <ul class="nav left-side-menu">
+            <li class="active">
+              <a data-toggle="pill" href="#home"> <span class="glyphicon glyphicon-home"></span>
+                &nbsp;Home</a>
+            </li>
+
+            <li>
+              <a data-toggle="pill" href="#down"><span class="glyphicon glyphicon-flash"></span>
+                &nbsp;How to Use
+              </a>
+            </li>
+            <li>
+              <a data-toggle="pill" href="#jointelegram"><span class="glyphicon glyphicon-send"></span>
+                &nbsp;Contact Me
+              </a>
+            </li>
+            <li>
+              <a data-toggle="pill" href="#about"><span class="glyphicon glyphicon-th-large"></span>
+                &nbsp;About Us
+              </a>
+            </li>
+            <li class="donate" style="margin-top:25px;">
+              <a href="https://www.facebook.com/diyacreator" target="_blank"> <span class="glyphicon glyphicon-gift"
+                  style="font-size:16px;"></span>
+                Donate Me</a>
+            </li>
+            
+
+
+
+          </ul>
+          <div class="fixed-bottom version text-left pl-4" style="font-size:12px">asd</div>
+        </div>
+      </div>
+      <div class="col-md-9 p-0 m-0">
+        <div class="tab-content">
+          <div id="home" class="tab-pane fade in show active">
+            <div class="col-md-12 p-0 m-0">
+              <div class="sonar-wrapper">
+                <div class="sonar-emitter">
+                  <div class="sonar-wave">
+
+                  </div>
+                </div>
+              </div>
+              <div class="btn-container">
+                <div class="btn-text">
+                  <button id="analyze" class="btn btn-info btn-xl">My Courses</button>
+                </div>
+              </div>
+              <div class="text-center mt-3" id="counter">
+                <i id="current-text"></i>
+                <i id="total-text"></i>
+              </div>
+            </div>
+            <div id="example" class="">
+
+            </div>
+          </div>
+          <div id="social" class="tab-pane p-4">
+            <h1>Social Media</h1>
+            <p>
+              <b>Facebook : </b> facebook<br>
+              <b>Instagram : </b> instagram
+            </p>
+          </div>
+          <div id="down" class="tab-pane p-4" style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <h1 style="font-size: 2.5rem; color: #ffff; font-weight: bold; text-align: center;">How to Use</h1>
+            <hr style="border: 1px solid #ddd; width: 50%; margin: 20px auto;">
+            
+            <div style="padding: 10px;">
+                <h4 style="color: #0056b3; font-weight: bold;">• Login to Udemy Account</h4>
+                <p>You must have a Udemy account and connect it with this extension.</p>
+                
+                <h4 style="color: #0056b3; font-weight: bold;">• Turn On Developer Mode</h4>
+                <p>Go to More Tools &rarr; Extension &rarr; Turn on Developer Mode</p>
+                
+                <h4 style="color: #0056b3; font-weight: bold;">• Save As Screen</h4>
+                <p>If you disable the "Ask where to save before downloading" feature in Chrome settings, you can download videos in an organized manner. <br>
+                   Change this setting at: <b><a href="chrome://settings/downloads" style="color: #007bff; text-decoration: none;">chrome://settings/downloads</a></b>
+                </p>
+                
+                <h4 style="color: #0056b3; font-weight: bold;">• Download Folder Structure</h4>
+                <p style="font-size: 14px;">
+                    Videos will be saved in the following structure:
+                    <br><b>Your Download Folder</b> \ Udemy Downloads \ <b>Instructor Name</b> \ <b>Course Name</b> \ <b>Video Name</b>.mp4
+                    <br><b>Example:</b> C:\Users\PC1\Downloads\Udemy Downloads\JosePortilla\CompletePython\1.CourseIntroduction.mp4
+                </p>
+                
+                <h4 style="color: #0056b3; font-weight: bold;">• My Videos Are Missing</h4>
+                <p>
+                    Only video content is analyzed. The extension does not download <b>articles</b> or <b>files</b>.
+                </p>
+            </div>
+        </div>
+        
+          <div id="jointelegram" class="tab-pane p-4">
+            <h1>Welcome to DiYA Sofware</h1>
+            <br>
+            <h4>• Telegram Channel</h4>
+    
+                Join Group Here - <a href="https://t.me/diyasoftware" target="_blank"><b>Join Now</b></a>
+            </p>
+      
+            <h4>• Facebook Page</h4>
+            <p>
+              Go to Facebook Page - <a href="https://www.facebook.com/diyacreator" target="_blank"><b>click to
+                  Facebook Page</b></a>
+            </p>
+          </div>
+          <div id="about" class="tab-pane p-4">
+            <h1>About Us</h1>
+            <br>
+            <p>Udemy Downloader is a Extension download videos from Udemy  ^^</p>
+            <br>
+            <h4>Objective </h4>
+            <p>Made to easily download lesson videos from Course Udemy just one click</p>
+            <br>
+            <h4>EM DiYA </h4>
+            <h5>
+              <a href="https://emdiya.vercel.app/" target="_blank" style="text-decoration: none; color: inherit;">
+                Full Stack Developer
+              </a>
+            </h5>
+            
+            <p>I’m a Full Stack Developer, and I’ve created this extension to help students easily download videos from Udemy with just one click. It’s designed to be fast, ad-free, and completely safe, ensuring a seamless experience for students who want to access their content offline.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
