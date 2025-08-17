@@ -4,9 +4,9 @@ var load = {};
 var course = {};
 var video = {};
 video.base = new Array();
-$(document).ready(function(){
-	$('.version').text('v' + chrome.runtime.getManifest().version);
-	$('Title').text(chrome.runtime.getManifest().name + ' v' + chrome.runtime.getManifest().version);
+$(document).ready(function () {
+  $('.version').text('v' + chrome.runtime.getManifest().version);
+  $('Title').text(chrome.runtime.getManifest().name + ' v' + chrome.runtime.getManifest().version);
 });
 const waitFor = (ms) => new Promise((r) => setTimeout(r, ms));
 const asyncForEach = async (array, callback) => {
@@ -17,156 +17,155 @@ const asyncForEach = async (array, callback) => {
 
 chrome.downloads.setShelfEnabled(false);
 var Application = {
-  init :  function() {
+  init: function () {
     Application.Cookies = [];
-	Application.Cookies = {ud_cache_user : ""};
+    Application.Cookies = { ud_cache_user: "" };
     chrome.cookies.getAll({
-        domain: "www.udemy.com"
-      }, function (cookies) {
+      domain: "www.udemy.com"
+    }, function (cookies) {
 
-        for (var i = 0; i < cookies.length; i++) {
-          Application.Cookies[cookies[i].name] = cookies[i].value;
-        }
-        if(Application.Cookies["ud_cache_user"].length > 2 ) { //login ise
-            $('.sonar-wrapper').hide();
-            $('.btn-container').show();
-            $('#analyze').on("click", function() {
-                $('.btn-container').hide();
-                $(this).prop('disabled',true);
-                $(this).text("Analyzing..");
-                $('.sonar-wrapper').show();
-                $('#total-text').text("Please wait analyzing..");
-                setTimeout(() => {
-                    Application.Course();
-                }, 1000);
-            });
-        }else{ // değilse
-            $('body').empty();
-            $('body').html("<i>Please log in on Udemy and restart the extension.</i>");
-            chrome.tabs.create({url : "https://www.udemy.com/join/login-popup/"}, () => {}) 
-        }    
+      for (var i = 0; i < cookies.length; i++) {
+        Application.Cookies[cookies[i].name] = cookies[i].value;
+      }
+      if (Application.Cookies["ud_cache_user"].length > 2) { //login ise
+        $('.sonar-wrapper').hide();
+        $('.btn-container').show();
+        $('#analyze').on("click", function () {
+          $('.btn-container').hide();
+          $(this).prop('disabled', true);
+          $(this).text("Analyzing..");
+          $('.sonar-wrapper').show();
+          $('#total-text').text("Please wait analyzing..");
+          setTimeout(() => {
+            Application.Course();
+          }, 1000);
+        });
+      } else { // değilse
+        $('body').empty();
+        $('body').html("<i>Please log in on Udemy and restart the extension.</i>");
+        chrome.tabs.create({ url: "https://www.udemy.com/join/login-popup/" }, () => { })
+      }
     });
 
   },
-  Course : function() {
-      load.url = "https://www.udemy.com/api-2.0/users/me/subscribed-courses/";
-      load.type = "GET";
-      load.data = {
-          "page_size": 4,
-          "ordering": "-last_accessed",
-          "fields[course]": "@min,visible_instructors,image_125_H,favorite_time,archive_time,completion_ratio,last_accessed_time,enrollment_time,is_practice_test_course,features,num_collections,published_title,is_private,buyable_object_type",
-          "fields[user]": "@min,job_title",
-          "page" : 1
-      };
-      var CourseCount = this.uGetApi(load); // get count
-      course.type = "CourseList";
-      if(CourseCount.count > 100) {
-          load.data.page_size = CourseCount.count; // write page size
-          course.CourseList = this.uGetApi(load); // get course list
-          for(i = 1; i < parseInt((CourseCount.count-1)/100)+1; i++ ) // 106 2 201 3 
-          {
-              load.data.page = i+1;
-              $.merge(course.CourseList.results,this.uGetApi(load).results); // get course list
-          }
-      }else{
-          load.data.page_size = CourseCount.count; // write page size
-          course.CourseList = this.uGetApi(load); // get course list
+  Course: function () {
+    load.url = "https://www.udemy.com/api-2.0/users/me/subscribed-courses/";
+    load.type = "GET";
+    load.data = {
+      "page_size": 4,
+      "ordering": "-last_accessed",
+      "fields[course]": "@min,visible_instructors,image_125_H,favorite_time,archive_time,completion_ratio,last_accessed_time,enrollment_time,is_practice_test_course,features,num_collections,published_title,is_private,buyable_object_type",
+      "fields[user]": "@min,job_title",
+      "page": 1
+    };
+    var CourseCount = this.uGetApi(load); // get count
+    course.type = "CourseList";
+    if (CourseCount.count > 100) {
+      load.data.page_size = CourseCount.count; // write page size
+      course.CourseList = this.uGetApi(load); // get course list
+      for (i = 1; i < parseInt((CourseCount.count - 1) / 100) + 1; i++) // 106 2 201 3 
+      {
+        load.data.page = i + 1;
+        $.merge(course.CourseList.results, this.uGetApi(load).results); // get course list
       }
-      Application.sendExtension(course.type, course.CourseList);
+    } else {
+      load.data.page_size = CourseCount.count; // write page size
+      course.CourseList = this.uGetApi(load); // get course list
+    }
+    Application.sendExtension(course.type, course.CourseList);
   },
-  Counter : async function(obj) {
-      $('#current-text').show();
-      $('#total-text').show();
-      $('#current-text').text(obj.Current);
-      if(obj.Total) {
-          $('#total-text').text(" in " + obj.Total);
-      }
+  Counter: async function (obj) {
+    $('#current-text').show();
+    $('#total-text').show();
+    $('#current-text').text(obj.Current);
+    if (obj.Total) {
+      $('#total-text').text(" in " + obj.Total);
+    }
   },
-  PlayList : async function () {
+  PlayList: async function () {
 
-      video.base = new Array();
-      load.url = "https://www.udemy.com/api-2.0/courses/"+Application.CourseId+"/subscriber-curriculum-items";
-      load.type = "GET";
-      load.data = {
-          "page_size": "1400",
-          "fields[lecture]": "title,object_index,is_published,sort_order,created,asset,supplementary_assets,is_free",
-          "fields[quiz]": "title,object_index,is_published,sort_order,type",
-          "fields[practice]": "title,object_index,is_published,sort_order",
-          "fields[chapter]": "title,object_index,is_published,sort_order",
-          "fields[asset]": "title,filename,asset_type,status,time_estimation,is_external",
-          "caching_intent": "True"
+    video.base = new Array();
+    load.url = "https://www.udemy.com/api-2.0/courses/" + Application.CourseId + "/subscriber-curriculum-items";
+    load.type = "GET";
+    load.data = {
+      "page_size": "1400",
+      "fields[lecture]": "title,object_index,is_published,sort_order,created,asset,supplementary_assets,is_free",
+      "fields[quiz]": "title,object_index,is_published,sort_order,type",
+      "fields[practice]": "title,object_index,is_published,sort_order",
+      "fields[chapter]": "title,object_index,is_published,sort_order",
+      "fields[asset]": "title,filename,asset_type,status,time_estimation,is_external",
+      "caching_intent": "True"
+    };
+    var getVideoList = this.uGetApi(load);
+    video.type = "PlayList";
+
+    VideoIdList = $.grep(getVideoList.results, function (element, index) {
+      return (typeof element.asset !== 'undefined') ? (element.asset.asset_type === 'Video') : "";
+    });
+    var i = 1;
+    Application.Counter({ "Total": VideoIdList.length });
+    await asyncForEach(VideoIdList, async (v, k) => {
+
+      await waitFor(0)
+
+      var temp = {};
+      temp.url = "https://www.udemy.com/api-2.0/users/me/subscribed-courses/" + Application.CourseId + "/lectures/" + v.id;
+      temp.type = "GET";
+      temp.data = {
+        "fields[lecture]": "asset,description,download_url,is_free,last_watched_second",
+        "fields[asset]": "asset_type,length,stream_urls,captions,thumbnail_sprite,slides,slide_urls,download_urls,image_125_H"
       };
-      var getVideoList = this.uGetApi(load);
-      video.type = "PlayList";
-      
-      VideoIdList = $.grep(getVideoList.results, function(element, index) {
-          return (typeof element.asset  !== 'undefined') ? (element.asset.asset_type === 'Video') : "";
+      var VideoDetails;
+      VideoDetails = Application.uGetApi(temp, { "Current": i });
+      video.base.push({
+        "id": v.id,
+        "VideoUrl": VideoDetails.asset.stream_urls.Video[0].file,
+        "VideoTitle": v.object_index + ". " + v.title,
+        "VideoThumbnail": ((VideoDetails.asset.thumbnail_sprite != null) ? VideoDetails.asset.thumbnail_sprite.img_url : ""),
+        "VideoQuality": VideoDetails.asset.stream_urls.Video[0].label
       });
-      var i = 1;
-      Application.Counter({"Total" : VideoIdList.length});
-      await asyncForEach(VideoIdList, async (v, k) => {
+      i++;
+    })
 
-          await waitFor(0)
-          
-          var temp = {};
-          temp.url = "https://www.udemy.com/api-2.0/users/me/subscribed-courses/" + Application.CourseId + "/lectures/" + v.id ;
-          temp.type = "GET";
-          temp.data = {
-              "fields[lecture]" : "asset,description,download_url,is_free,last_watched_second",
-              "fields[asset]":"asset_type,length,stream_urls,captions,thumbnail_sprite,slides,slide_urls,download_urls,image_125_H"
-          };
-          var VideoDetails;
-          VideoDetails = Application.uGetApi(temp, {"Current" : i});
-          video.base.push( {
-              "id" : v.id,
-              "VideoUrl" : VideoDetails.asset.stream_urls.Video[0].file,
-              "VideoTitle" : v.object_index + ". " + v.title,
-              "VideoThumbnail" : ((VideoDetails.asset.thumbnail_sprite != null) ? VideoDetails.asset.thumbnail_sprite.img_url : ""),
-              "VideoQuality" : VideoDetails.asset.stream_urls.Video[0].label
-          });
-          i++;
-      })
-
-      Application.sendExtension(video.type, video.base);
+    Application.sendExtension(video.type, video.base);
   },
-  sendExtension : function(a, b) {
-      Application.Core({ "Step" : a, "Data" : b });
+  sendExtension: function (a, b) {
+    Application.Core({ "Step": a, "Data": b });
   },
-  uGetApi :  function(data, type = "")
-  {
-      const results =   $.ajax({
-          url: data.url,
-          type: data.type,
-          "headers": {
-              "Content-Type": "application/json, text/plain, */*",
-              "x-udemy-authorization": "Bearer " + Application.Cookies["access_token"],
-              "x-udemy-cache-brand"  : Application.Cookies["ud_cache_brand"],
-              "x-udemy-cache-campaign-code": Application.Cookies["ud_cache_campaign_code"],
-              "x-udemy-cache-device" : Application.Cookies["ud_cache_device"],
-              "x-udemy-cache-language": Application.Cookies["ud_cache_language"],
-              "x-udemy-cache-logged-in" : Application.Cookies["ud_cache_logged_in"],
-              "x-udemy-cache-marketplace-country" : Application.Cookies["ud_cache_marketplace_country"],
-              "x-udemy-cache-modern-browser" : Application.Cookies["ud_cache_modern_browser"],
-              "x-udemy-cache-price-country" : Application.Cookies["ud_cache_price_country"],
-              "x-udemy-cache-release" : Application.Cookies["ud_cache_release"],
-              "x-udemy-cache-user" : Application.Cookies["ud_cache_user"],
-              "x-udemy-cache-version" : Application.Cookies["ud_cache_version"]
-          },
-          async: false,
-          data:data.data,
-          beforeSend: function() {
-          },
-          statusCode: {
-              200 : function(e) {
-                  Application.Counter(type);
-                  return e;
-              },
-              404 : function(e)  {
-                  Application.Debug("Api Exception");
-              }
-          }
-      });
-      return results.responseJSON;
+  uGetApi: function (data, type = "") {
+    const results = $.ajax({
+      url: data.url,
+      type: data.type,
+      "headers": {
+        "Content-Type": "application/json, text/plain, */*",
+        "x-udemy-authorization": "Bearer " + Application.Cookies["access_token"],
+        "x-udemy-cache-brand": Application.Cookies["ud_cache_brand"],
+        "x-udemy-cache-campaign-code": Application.Cookies["ud_cache_campaign_code"],
+        "x-udemy-cache-device": Application.Cookies["ud_cache_device"],
+        "x-udemy-cache-language": Application.Cookies["ud_cache_language"],
+        "x-udemy-cache-logged-in": Application.Cookies["ud_cache_logged_in"],
+        "x-udemy-cache-marketplace-country": Application.Cookies["ud_cache_marketplace_country"],
+        "x-udemy-cache-modern-browser": Application.Cookies["ud_cache_modern_browser"],
+        "x-udemy-cache-price-country": Application.Cookies["ud_cache_price_country"],
+        "x-udemy-cache-release": Application.Cookies["ud_cache_release"],
+        "x-udemy-cache-user": Application.Cookies["ud_cache_user"],
+        "x-udemy-cache-version": Application.Cookies["ud_cache_version"]
+      },
+      async: false,
+      data: data.data,
+      beforeSend: function () {
+      },
+      statusCode: {
+        200: function (e) {
+          Application.Counter(type);
+          return e;
+        },
+        404: function (e) {
+          Application.Debug("Api Exception");
+        }
+      }
+    });
+    return results.responseJSON;
   },
   CreateTable: function (obj) {
     $("#example").empty();
@@ -222,9 +221,9 @@ var Application = {
             $("#SelectAll span").text("Select All");
             $("#SelectedVideos").text(
               "Download " +
-                checkboxChecked +
-                " " +
-                (checkboxChecked === 1 ? "Video" : "Videos")
+              checkboxChecked +
+              " " +
+              (checkboxChecked === 1 ? "Video" : "Videos")
             );
           } else {
             $("#SelectedVideos").prop("disabled", true);
@@ -432,9 +431,9 @@ var Application = {
             $("#SelectedVideos").prop("disabled", false);
             $("#SelectedVideos").text(
               "Download " +
-                checkboxChecked +
-                " " +
-                (checkboxChecked === 1 ? "Video" : "Videos")
+              checkboxChecked +
+              " " +
+              (checkboxChecked === 1 ? "Video" : "Videos")
             );
           } else {
             $("#SelectedVideos").prop("disabled", true);
@@ -442,12 +441,12 @@ var Application = {
           }
         }
         next();
-      } else if(id === currentId && id > 0){
+      } else if (id === currentId && id > 0) {
 
-        setTimeout(()=>{
+        setTimeout(() => {
           pollProgress(id);
-        },250);        
-        
+        }, 250);
+
         var rows = $("#linkTable").dataTable().$("tr", { filter: "applied" });
         rows.find("td").find('[class*="btn-download"]').prop("disabled", true);
         $("#SelectedVideos").prop("disabled", true);
@@ -534,7 +533,7 @@ var Application = {
                 }
 
                 // devamlı çalışacak kısım
-                
+
                 progressBar.css("width", dPercent + "%");
                 progressBar.text(dPercent + "%");
                 rows
@@ -683,9 +682,9 @@ var Application = {
                 var checkboxChecked = checkboxes.filter("input:checked").length; //checkbox checked count
                 $("#SelectedVideos").text(
                   "Download " +
-                    checkboxChecked +
-                    " " +
-                    (checkboxChecked === 1 ? "Video" : "Videos")
+                  checkboxChecked +
+                  " " +
+                  (checkboxChecked === 1 ? "Video" : "Videos")
                 );
               }
             },
@@ -698,6 +697,7 @@ var Application = {
               $(".sonar-wrapper").show();
               $("#counter").show();
               $("#message").hide();
+
               Application.PlayList();
             },
           },

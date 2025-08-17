@@ -12,6 +12,42 @@
   <link rel="stylesheet" href="css/custom.css">
   <script src="background.js"></script>
 
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      border: 2px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .container h1,
+    .container h4 {
+      color: #000;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .button-secondary {
+      background-color: #ccc;
+      color: #000;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -45,15 +81,21 @@
                 &nbsp;About Us
               </a>
             </li>
-            <li class="donate" style="margin-top:25px;">
-              <a href="https://www.facebook.com/diyacreator" target="_blank"> <span class="glyphicon glyphicon-gift"
-                  style="font-size:16px;"></span>
-                Donate Me</a>
+            <li>
+              <a data-toggle="pill" href="#setting"><span class="glyphicon glyphicon-cog"></span>
+                &nbsp;Setting
+              </a>
             </li>
-            
 
-
-
+            </li>
+            <li class="donate">
+              <a href="https://link.payway.com.kh/ABAPAYoc326689D" target="_blank">
+                <span style="font-size:16px;"></span>
+                <img src="image/aba_logo.png" alt="ABA Logo"
+                  style="height:20px; width:20px; vertical-align:middle; border-radius:50%; margin-right:10px;">
+                Donate Me
+              </a>
+            </li>
           </ul>
           <div class="fixed-bottom version text-left pl-4" style="font-size:12px">asd</div>
         </div>
@@ -93,69 +135,161 @@
           <div id="down" class="tab-pane p-4" style="font-family: Arial, sans-serif; line-height: 1.6;">
             <h1 style="font-size: 2.5rem; color: #ffff; font-weight: bold; text-align: center;">How to Use</h1>
             <hr style="border: 1px solid #ddd; width: 50%; margin: 20px auto;">
-            
+
             <div style="padding: 10px;">
-                <h4 style="color: #0056b3; font-weight: bold;">• Login to Udemy Account</h4>
+              <h4 style="color: #ffff; font-weight: bold;">• Login to Udemy Account</h4>
+              <small>
                 <p>You must have a Udemy account and connect it with this extension.</p>
-                
-                <h4 style="color: #0056b3; font-weight: bold;">• Turn On Developer Mode</h4>
+              </small>
+
+              <h4 style="color: #ffff; font-weight: bold;">• Turn On Developer Mode</h4>
+              <small>
                 <p>Go to More Tools &rarr; Extension &rarr; Turn on Developer Mode</p>
-                
-                <h4 style="color: #0056b3; font-weight: bold;">• Save As Screen</h4>
-                <p>If you disable the "Ask where to save before downloading" feature in Chrome settings, you can download videos in an organized manner. <br>
-                   Change this setting at: <b><a href="chrome://settings/downloads" style="color: #007bff; text-decoration: none;">chrome://settings/downloads</a></b>
+              </small>
+
+              <h4 style="color: #ffff; font-weight: bold;">• Save As Screen</h4>
+              <small>
+                <p>If you disable the "Ask where to save before downloading" feature in Chrome settings, you can
+                  download videos
+                  in an organized manner. <br>
+                  Change this setting at: <b><a href="chrome://settings/downloads"
+                      style="color: #007bff; text-decoration: none;">chrome://settings/downloads</a></b>
                 </p>
-                
-                <h4 style="color: #0056b3; font-weight: bold;">• Download Folder Structure</h4>
+              </small>
+
+              <h4 style="color: #ffff; font-weight: bold;">• Download Folder Structure</h4>
+              <small>
                 <p style="font-size: 14px;">
-                    Videos will be saved in the following structure:
-                    <br><b>Your Download Folder</b> \ Udemy Downloads \ <b>Instructor Name</b> \ <b>Course Name</b> \ <b>Video Name</b>.mp4
-                    <br><b>Example:</b> C:\Users\PC1\Downloads\Udemy Downloads\JosePortilla\CompletePython\1.CourseIntroduction.mp4
+                  Videos will be saved in the following structure:
+                  <br><b>Your Download Folder</b> \ Udemy Downloads \ <b>Instructor Name</b> \ <b>Course Name</b> \
+                  <b>Video
+                    Name</b>.mp4
+                  <br><b>Example:</b> C:\Users\PC1\Downloads\Udemy
+                  Downloads\JosePortilla\CompletePython\1.CourseIntroduction.mp4
                 </p>
-                
-                <h4 style="color: #0056b3; font-weight: bold;">• My Videos Are Missing</h4>
-                <p>
-                    Only video content is analyzed. The extension does not download <b>articles</b> or <b>files</b>.
-                </p>
+              </small>
+
+              <h4 style="color: #ffff; font-weight: bold;">• My Video Demo</h4>
+
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/dItdxh5MqgM?si=53Hz_kDWO4zltzAP"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+
             </div>
-        </div>
-        
-          <div id="jointelegram" class="tab-pane p-4">
-            <h1>Welcome to DiYA Sofware</h1>
-            <br>
-            <h4>• Telegram Channel</h4>
-    
-                Join Group Here - <a href="https://t.me/diyasoftware" target="_blank"><b>Join Now</b></a>
-            </p>
-      
-            <h4>• Facebook Page</h4>
-            <p>
-              Go to Facebook Page - <a href="https://www.facebook.com/diyacreator" target="_blank"><b>click to
-                  Facebook Page</b></a>
-            </p>
+          </div>
+
+
+          <div id="jointelegram" class="tab-pane p-4" style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <h1 style="font-size: 2.5rem; color: #ffff; font-weight: bold; text-align: center;">Join Our Community</h1>
+            <hr style="border: 1px solid #ddd; width: 50%; margin: 20px auto;">
+
+            <div style="padding: 10px;">
+              <h4 style="color: #ffff; font-weight: bold;">• Telegram Channel</h4>
+              <p>
+                Join our Telegram community to get the latest updates, support, and connect with other users!
+                <br>
+                <a href="https://t.me/diyasoftware" target="_blank"
+                  style="color: #007bff; text-decoration: none; display: inline-block; margin-top: 10px;">
+                  <button
+                    style="background-color: #0088cc; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer;">
+                    Join Telegram Channel
+                  </button>
+                </a>
+              </p>
+
+              <h4 style="color: #ffff; font-weight: bold;">• Facebook Page</h4>
+              <p>
+                Follow our Facebook page for news, tutorials, and community discussions!
+                <br>
+                <a href="https://www.facebook.com/diyacreator" target="_blank"
+                  style="color: #007bff; text-decoration: none; display: inline-block; margin-top: 10px;">
+                  <button
+                    style="background-color: #1877f2; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer;">
+                    Visit Facebook Page
+                  </button>
+                </a>
+              </p>
+            </div>
           </div>
           <div id="about" class="tab-pane p-4">
             <h1>About Us</h1>
             <br>
-            <p>Udemy Downloader is a Extension download videos from Udemy  ^^</p>
+            <small>
+              <p>Udemy Downloader is an incredibly useful browser extension specifically designed to provide users with
+                a seamless
+                experience in downloading educational videos from Udemy. By simply clicking a button, users can
+                effortlessly download
+                their desired course videos directly to their local storage. This tool is perfect for students and
+                lifelong learners who
+                prefer to have offline access to their study materials. Whether you have a spotty internet connection or
+                prefer to study
+                without interruptions, this extension ensures that you have your Udemy videos at your fingertips,
+                anytime and anywhere. ^^</p>
+            </small>
             <br>
-            <h4>Objective </h4>
-            <p>Made to easily download lesson videos from Course Udemy just one click</p>
+            <h4>Objective</h4>
+            <small>
+              <p>Made to easily download lesson videos from Course Udemy just one click</p>
+            </small>
             <br>
-            <h4>EM DiYA </h4>
+            <h4>Kalidy</h4>
             <h5>
-              <a href="https://emdiya.vercel.app/" target="_blank" style="text-decoration: none; color: inherit;">
-                Full Stack Developer
-              </a>
+              <small>
+                <a href="https://emdiya.vercel.app/" target="_blank" style="text-decoration: none; color: inherit;">
+                  Software Developer
+                </a>
+
+              </small>
+
             </h5>
-            
-            <p>I’m a Full Stack Developer, and I’ve created this extension to help students easily download videos from Udemy with just one click. It’s designed to be fast, ad-free, and completely safe, ensuring a seamless experience for students who want to access their content offline.</p>
+            <small>
+              <p>I’m a Software Developer, and I’ve created this extension to help students easily download videos
+                from Udemy
+                with just one click. It’s designed to be fast, ad-free, and completely safe, ensuring a seamless
+                experience for
+                students who want to access their content offline.</p>
+            </small>
           </div>
+
+          <div id="setting" class="tab-pane p-4">
+            <h1>Setting</h1>
+            <br>
+            <div style="padding: 10px;">
+
+              <h4 style="color: #ffff; font-weight: bold;">• Change Location Download</h4>
+              <small>
+                <p>If you disable the "Ask where to save before downloading" feature in Chrome settings, you can
+                  download videos
+                  in an organized manner. <br>
+                  Change this setting at: <b><a href="chrome://settings/downloads"
+                      style="color: #007bff; text-decoration: none;">chrome://settings/downloads</a></b>
+                </p>
+              </small>
+
+              <h4 style="color: #ffff; font-weight: bold;">• Download Folder Structure</h4>
+              <small>
+                <p style="font-size: 14px;">
+                  Videos will be saved in the following structure:
+                  <br><b>Your Download Folder</b> \ Udemy Downloads \ <b>Instructor Name</b> \ <b>Course Name</b> \
+                  <b>Video
+                    Name</b>.mp4
+                  <br><b>Example:</b> C:\Users\PC1\Downloads\Udemy
+                  Downloads\JosePortilla\CompletePython\1.CourseIntroduction.mp4
+                </p>
+              </small>
+
+
+            </div>
+          </div>
+
         </div>
       </div>
 
     </div>
   </div>
+
+
 
 </body>
 
